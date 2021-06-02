@@ -163,6 +163,7 @@ module.exports = class ColorPicker extends Component {
 		row: false,
 		noSnap: false,
 		thumbSize: 50,
+		slider: true,
 		sliderSize: 20,
 		discrete: false,
 		swatches: true,
@@ -510,6 +511,7 @@ module.exports = class ColorPicker extends Component {
 			swatchesOnly,
 			discrete,
 			row,
+			slider,
 		} = this.props
 		const swatches = !!(this.props.swatches || swatchesOnly)
 		const hsv = hsv2Hex(this.color), hex = hsv2Hex(this.color.h,this.color.s,100)
@@ -575,7 +577,7 @@ module.exports = class ColorPicker extends Component {
 						</View>
 					</View> }
 				</View> }
-				{ !swatchesOnly && (discrete ? <View style={[ss.swatches,swatchStyle]} key={'$2'}>{ this.disc }</View> : <View style={[ss.slider,sliderStyle]} key={'$2'}>
+				{ !swatchesOnly && slider && (discrete ? <View style={[ss.swatches,swatchStyle]} key={'$2'}>{ this.disc }</View> : <View style={[ss.slider,sliderStyle]} key={'$2'}>
 					<View style={[ss.grad,{backgroundColor:hex}]}>
 						<Image style={ss.sliderImg} source={row?srcSliderRotated:srcSlider} resizeMode="stretch" />
 					</View>

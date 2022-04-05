@@ -203,7 +203,7 @@ module.exports = class ColorPicker extends Component {
 			const {h,s,v} = hsv
 			if (!this.props.noSnap && radius <= 0.10 && radius >= 0) this.animate('#ffffff', 'hs', false, true)
 			if (!this.props.noSnap && radius >= 0.95 && radius <= 1) this.animate(this.state.currentColor, 'hs', true)
-			if (this.props.onColorChangeComplete) this.props.onColorChangeComplete(hsv2Hex(hsv))
+			if (this.props.onColorChangeComplete) this.props.onColorChangeComplete(hsv2Hex(hsv), hsv)
 			this.setState({currentColor:this.state.currentColor}, x=>this.renderDiscs())
 		},
 	})
@@ -237,7 +237,7 @@ module.exports = class ColorPicker extends Component {
 			const ratio = this.ratio(nativeEvent)
 			if (!this.props.noSnap && ratio <= 0.05 && ratio >= 0) this.animate(this.state.currentColor, 'v', false)
 			if (!this.props.noSnap && ratio >= 0.95 && ratio <= 1) this.animate(this.state.currentColor, 'v', true)
-			if (this.props.onColorChangeComplete) this.props.onColorChangeComplete(hsv2Hex(hsv))
+			if (this.props.onColorChangeComplete) this.props.onColorChangeComplete(hsv2Hex(hsv), hsv)
 		},
 	})
 	constructor (props) {
@@ -397,7 +397,7 @@ module.exports = class ColorPicker extends Component {
 		this.slideY.setValue(0)
 		this.color = hsv
 		this.setState({hsv, currentColor, hueSaturation: hsv2Hex(this.color.h,this.color.s,100)})
-		this.props.onColorChange(hsv2Hex(hsv))
+		this.props.onColorChange(hsv2Hex(hsv), hsv)
 		// this.testData.deg = deg
 		// this.testData.radius = radius
 		// this.testData.pan = JSON.stringify({x:this.panX,y:this.panY})
@@ -410,7 +410,7 @@ module.exports = class ColorPicker extends Component {
 		const currentColor = hsv2Hex(hsv)
 		this.color = hsv
 		this.setState({hsv, currentColor, hueSaturation: hsv2Hex(this.color.h,this.color.s,100)})
-		this.props.onColorChange(hsv2Hex(hsv))
+		this.props.onColorChange(hsv2Hex(hsv), hsv)
 	}
 	update = (color, who, max, force) => {
 		const specific = (typeof who == 'string'), who_hs = (who=='hs'), who_v = (who=='v')
@@ -429,8 +429,8 @@ module.exports = class ColorPicker extends Component {
 		stt.currentColor = hsv2Hex(hsv)
 		this.setState(stt, x=>{ this.tryForceUpdate(); this.renderDiscs(); })
 		// this.setState({currentColor:hsv2Hex(hsv)}, x=>this.tryForceUpdate())
-		this.props.onColorChange(hsv2Hex(hsv))
-		if (this.props.onColorChangeComplete) this.props.onColorChangeComplete(hsv2Hex(hsv))
+		this.props.onColorChange(hsv2Hex(hsv), hsv)
+		if (this.props.onColorChangeComplete) this.props.onColorChangeComplete(hsv2Hex(hsv), hsv)
 		if(who_hs||!specific) {
 			this.panY.setValue(top)// - this.props.thumbSize / 2)
 			this.panX.setValue(left)// - this.props.thumbSize / 2)
@@ -458,8 +458,8 @@ module.exports = class ColorPicker extends Component {
 		stt.currentColor = hsv2Hex(hsv)
 		this.setState(stt, x=>{ this.tryForceUpdate(); this.renderDiscs(); })
 		// this.setState({currentColor:hsv2Hex(hsv)}, x=>this.tryForceUpdate())
-		this.props.onColorChange(hsv2Hex(hsv))
-		if (this.props.onColorChangeComplete) this.props.onColorChangeComplete(hsv2Hex(hsv))
+		this.props.onColorChange(hsv2Hex(hsv), hsv)
+		if (this.props.onColorChangeComplete) this.props.onColorChangeComplete(hsv2Hex(hsv), hsv)
 		let anims = []
 		if(who_hs||!specific) anims.push(//{//
 			Animated.spring(this.panX, { toValue: left, useNativeDriver: false, friction: 90 }),//.start()//
